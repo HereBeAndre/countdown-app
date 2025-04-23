@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+const getLocalStorageKey = (key: 'eventName' | 'endDate') =>
+  localStorage.getItem(key) || '';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +12,12 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
-  title = 'countdown-app';
+export class AppComponent implements OnInit {
+  eventName = getLocalStorageKey('eventName');
+  endDate = getLocalStorageKey('endDate');
+  countdown = '';
+  // TODO: Refine this type
+  intervalId: number | null = null;
+
+  ngOnInit() {}
 }
