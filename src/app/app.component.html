@@ -1,6 +1,5 @@
 <div className="app-container">
-  <!-- TODO: Add form onSubmit -->
-  <form>
+  <form (ngSubmit)="startCountdown()" #countdownForm="ngForm">
     <label>
       Event Name:
       <input [(ngModel)]="eventName" name="eventName" required />
