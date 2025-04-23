@@ -1,3 +1,23 @@
-<div>
-  <h1>Countdown app</h1>
+<div className="app-container">
+  <!-- TODO: Add form onSubmit -->
+  <form>
+    <label>
+      Event Name:
+      <input [(ngModel)]="eventName" name="eventName" required />
+    </label>
+    <label>
+      End Date:
+      <input
+        [(ngModel)]="endDate"
+        name="endDate"
+        type="datetime-local"
+        required
+      />
+    </label>
+  </form>
+
+  <!-- TODO: Need to resize text -->
+  <div class="countdown-wrapper" *ngIf="countdown">
+    <h1>{{ eventName }}: {{ countdown }}</h1>
+  </div>
 </div>
