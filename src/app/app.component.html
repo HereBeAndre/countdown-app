@@ -1,22 +1,32 @@
 <div className="app-container">
-  <form (ngSubmit)="startCountdown()" #countdownForm="ngForm">
-    <label>
-      Event Name:
-      <input [(ngModel)]="eventName" name="eventName" required />
-    </label>
-    <label>
-      End Date:
-      <input
-        [(ngModel)]="endDate"
-        name="endDate"
-        type="datetime-local"
-        required
-      />
-    </label>
-  </form>
-
   <!-- TODO: Need to resize text -->
-  <div class="countdown-wrapper" *ngIf="countdown">
-    <h1>{{ eventName }}: {{ countdown }}</h1>
+  <div *ngIf="countdown">
+    <!-- TODO: Need to add style to children -->
+    <h1>{{ eventName }}</h1>
+    <h1>{{ countdown }}</h1>
   </div>
+
+  <form (ngSubmit)="startCountdown()" #countdownForm="ngForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput name="eventName" [(ngModel)]="eventName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        name="endDate"
+        [(ngModel)]="endDate"
+        required
+        [min]="minDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- BUG: ngSubmit isn't triggered unless focus is on eventName input -->
+    <button type="submit" style="display: none"></button>
+  </form>
 </div>
