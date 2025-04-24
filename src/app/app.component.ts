@@ -1,18 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FitTextDirective } from './fit-text.directive';
-
-// TODO: Refactor to Service
-const getLocalStorageKey = (key: 'eventName' | 'endDate') =>
-  localStorage.getItem(key) || '';
-
-const setLocalStorageKey = (key: 'eventName' | 'endDate', value: string) =>
-  localStorage.setItem(key, value);
+import { LocalStorageService } from './local-storage.service';
 
 const INTERVAL = 1000;
 
@@ -32,29 +26,32 @@ const INTERVAL = 1000;
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  eventName = getLocalStorageKey('eventName');
-  endDate: Date | null = (() => {
-    const rawDate = getLocalStorageKey('endDate');
-    const parsed = new Date(rawDate);
-    return isNaN(parsed.getTime()) ? null : parsed;
-  })();
+  eventName = '';
+  endDate: Date | null = null;
   countdown = '';
   // TODO: Refine this type - should be of type Timeout | number?
   intervalId: any = null;
+  // Needed to set the minDate for the datepicker
+  minDate = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate() + 1
+  );
+
+  constructor(private localStorageService: LocalStorageService) {
+    this.eventName = this.localStorageService.get('eventName');
+    this.endDate = (() => {
+      const rawDate = this.localStorageService.get('endDate');
+      const parsed = new Date(rawDate);
+      return isNaN(parsed.getTime()) ? null : parsed;
+    })();
+  }
 
   // constructor() {
   //   const stringDate = getLocalStorageKey('endDate');
   //   const parsed = new Date(stringDate);
   //   this.endDate = isNaN(parsed.getTime()) ? null : parsed;
   // }
-
-  // Needed to set the minDate for the datepicker
-  today = new Date();
-  minDate = new Date(
-    this.today.getFullYear(),
-    this.today.getMonth(),
-    this.today.getDate() + 1
-  );
 
   ngOnInit() {
     // Resume countdown if there's data in local storage
@@ -76,13 +73,13 @@ export class AppComponent implements OnInit {
   // }
 
   onEventNameChange() {
-    setLocalStorageKey('eventName', this.eventName);
+    this.localStorageService.set('eventName', this.eventName);
     if (this.eventName && this.endDate) this.startCountdown();
   }
 
   onEndDateChange() {
     if (this.endDate instanceof Date && !isNaN(this.endDate.getTime())) {
-      setLocalStorageKey('endDate', this.endDate.toString());
+      this.localStorageService.set('endDate', this.endDate.toString());
       this.startCountdown();
     }
   }
