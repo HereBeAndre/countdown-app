@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FitTextDirective } from './fit-text.directive';
 
+// TODO: Refactor to Service
 const getLocalStorageKey = (key: 'eventName' | 'endDate') =>
   localStorage.getItem(key) || '';
 
@@ -32,12 +33,22 @@ const INTERVAL = 1000;
 })
 export class AppComponent implements OnInit {
   eventName = getLocalStorageKey('eventName');
-  endDate = getLocalStorageKey('endDate');
+  endDate: Date | null = (() => {
+    const rawDate = getLocalStorageKey('endDate');
+    const parsed = new Date(rawDate);
+    return isNaN(parsed.getTime()) ? null : parsed;
+  })();
   countdown = '';
   // TODO: Refine this type - should be of type Timeout | number?
   intervalId: any = null;
 
-  // Only used to set the minDate for the datepicker
+  // constructor() {
+  //   const stringDate = getLocalStorageKey('endDate');
+  //   const parsed = new Date(stringDate);
+  //   this.endDate = isNaN(parsed.getTime()) ? null : parsed;
+  // }
+
+  // Needed to set the minDate for the datepicker
   today = new Date();
   minDate = new Date(
     this.today.getFullYear(),
@@ -45,7 +56,6 @@ export class AppComponent implements OnInit {
     this.today.getDate() + 1
   );
 
-  // Runs on component mount
   ngOnInit() {
     // Resume countdown if there's data in local storage
     if (this.eventName && this.endDate) {
@@ -65,25 +75,32 @@ export class AppComponent implements OnInit {
   //   }
   // }
 
-  startCountdown() {
+  onEventNameChange() {
     setLocalStorageKey('eventName', this.eventName);
-    setLocalStorageKey('endDate', this.endDate);
+    if (this.eventName && this.endDate) this.startCountdown();
+  }
 
+  onEndDateChange() {
+    if (this.endDate instanceof Date && !isNaN(this.endDate.getTime())) {
+      setLocalStorageKey('endDate', this.endDate.toString());
+      this.startCountdown();
+    }
+  }
+
+  // Callable only from within the class since form doesn't have a proper submit
+  private startCountdown() {
     this.intervalId = setInterval(() => {
       const now = new Date().getTime();
-      const end = new Date(this.endDate).getTime();
+      const end = new Date(this.endDate!).getTime();
       const delta = end - now;
 
-      // if (this.delta === 0) {
-      //   this.countdown = 'Event has started!';
+      // Base case: if the countdown is over
+      // if (delta <= 0) {
       //   clearInterval(this.intervalId);
-      //   // return;
-      // }
-
-      // if (this.delta < 0) {
-      //   this.countdown = 'Event has ended!';
-      //   clearInterval(this.intervalId);
-      //   // return;
+      //   this.countdown = `0 days, 0 h, 0 m, 0 s`;
+      //   setLocalStorageKey('eventName', '');
+      //   setLocalStorageKey('endDate', '');
+      //   return;
       // }
 
       // TODO: Could be refactored to a Pipe?

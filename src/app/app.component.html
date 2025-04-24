@@ -7,18 +7,14 @@
   <ng-template #noTitleBlock
     ><h1 appFitText class="text">Set a title</h1></ng-template
   >
-  <div *ngIf="countdown && eventName; else noCountdownBlock">
+  <div *ngIf="countdown && eventName && endDate; else noCountdownBlock">
     <p appFitText class="text">{{ countdown }}</p>
   </div>
   <ng-template #noCountdownBlock>
     <p appFitText class="text">Set a date</p>
   </ng-template>
 
-  <form
-    (ngSubmit)="startCountdown()"
-    #countdownForm="ngForm"
-    id="form-container"
-  >
+  <form #countdownForm="ngForm" id="form-container">
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Title</mat-label>
       <input
@@ -27,6 +23,7 @@
         [(ngModel)]="eventName"
         required
         autocomplete="off"
+        (ngModelChange)="onEventNameChange()"
       />
     </mat-form-field>
 
@@ -40,12 +37,13 @@
         required
         [min]="minDate"
         autocomplete="off"
+        (ngModelChange)="onEndDateChange()"
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <!-- BUG: ngSubmit isn't triggered unless focus is on eventName input -->
-    <button type="submit" style="display: none"></button>
+    <!-- <button type="submit" style="display: none"></button> -->
   </form>
 </div>
