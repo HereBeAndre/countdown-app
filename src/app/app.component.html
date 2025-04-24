@@ -1,24 +1,36 @@
 <!-- TODO: Check text resizing -->
-<div className="app-container">
+<div id="template-container">
   <!-- TODO: Need to add style to children -->
   <div *ngIf="eventName; else noTitleBlock">
-    <h1 appFitText>Time to {{ eventName }}</h1>
+    <h1 appFitText class="text">Time to {{ eventName }}</h1>
   </div>
-  <ng-template #noTitleBlock><h1 appFitText>Set a title</h1></ng-template>
-  <div *ngIf="countdown; else noCountdownBlock">
-    <h1 appFitText>{{ countdown }}</h1>
+  <ng-template #noTitleBlock
+    ><h1 appFitText class="text">Set a title</h1></ng-template
+  >
+  <div *ngIf="countdown && eventName; else noCountdownBlock">
+    <p appFitText class="text">{{ countdown }}</p>
   </div>
   <ng-template #noCountdownBlock>
-    <h1 appFitText>Set a date</h1>
+    <p appFitText class="text">Set a date</p>
   </ng-template>
 
-  <form (ngSubmit)="startCountdown()" #countdownForm="ngForm">
-    <mat-form-field appearance="outline">
+  <form
+    (ngSubmit)="startCountdown()"
+    #countdownForm="ngForm"
+    id="form-container"
+  >
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Title</mat-label>
-      <input matInput name="eventName" [(ngModel)]="eventName" required />
+      <input
+        matInput
+        name="eventName"
+        [(ngModel)]="eventName"
+        required
+        autocomplete="off"
+      />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="form-field">
       <mat-label>Date</mat-label>
       <input
         matInput
@@ -27,6 +39,7 @@
         [(ngModel)]="endDate"
         required
         [min]="minDate"
+        autocomplete="off"
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
