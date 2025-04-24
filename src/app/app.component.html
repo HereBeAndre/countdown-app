@@ -5,13 +5,15 @@
     <h1 appFitText class="text">Time to {{ eventName }}</h1>
   </div>
   <ng-template #noTitleBlock
-    ><h1 appFitText class="text">Set an event</h1></ng-template
+    ><div><h1 appFitText class="text">Set an event</h1></div></ng-template
   >
   <div *ngIf="countdown && eventName && endDate; else noCountdownBlock">
     <p appFitText class="text">{{ countdown }}</p>
   </div>
   <ng-template #noCountdownBlock>
-    <p appFitText class="text">Set a date</p>
+    <div>
+      <p appFitText class="text">Set a date</p>
+    </div>
   </ng-template>
 
   <form #countdownForm="ngForm" id="form-container">
