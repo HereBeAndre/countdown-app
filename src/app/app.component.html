@@ -5,7 +5,7 @@
     <h1 appFitText class="text">Time to {{ eventName }}</h1>
   </div>
   <ng-template #noTitleBlock
-    ><h1 appFitText class="text">Set a title</h1></ng-template
+    ><h1 appFitText class="text">Set an event</h1></ng-template
   >
   <div *ngIf="countdown && eventName && endDate; else noCountdownBlock">
     <p appFitText class="text">{{ countdown }}</p>

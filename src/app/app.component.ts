@@ -26,7 +26,7 @@ const INTERVAL = 1000;
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  eventName = '';
+  eventName = 'apply to Natural Cycles';
   endDate: Date | null = null;
   countdown = '';
   // TODO: Refine this type - should be of type Timeout | number?
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
   );
 
   constructor(private localStorageService: LocalStorageService) {
-    this.eventName = this.localStorageService.get('eventName');
+    // this.eventName = this.localStorageService.get('eventName');
     this.endDate = (() => {
       const rawDate = this.localStorageService.get('endDate');
       const parsed = new Date(rawDate);

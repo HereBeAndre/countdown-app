@@ -14,10 +14,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'countdown-app' title`, () => {
+  it('should display the default event name', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('countdown-app');
+    expect(app.eventName).toEqual('apply to Natural Cycles');
   });
 
   it('should render title', () => {
