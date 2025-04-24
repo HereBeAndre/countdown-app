@@ -1,9 +1,9 @@
 <div className="app-container">
-  <!-- TODO: Need to resize text -->
+  <!-- TODO: Check text resizing -->
   <div *ngIf="countdown">
     <!-- TODO: Need to add style to children -->
-    <h1>{{ eventName }}</h1>
-    <h1>{{ countdown }}</h1>
+    <h1 appFitText>{{ eventName }}</h1>
+    <h1 appFitText>{{ countdown }}</h1>
   </div>
 
   <form (ngSubmit)="startCountdown()" #countdownForm="ngForm">
