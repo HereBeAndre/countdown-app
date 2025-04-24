@@ -1,10 +1,16 @@
+<!-- TODO: Check text resizing -->
 <div className="app-container">
-  <!-- TODO: Check text resizing -->
-  <div *ngIf="countdown">
-    <!-- TODO: Need to add style to children -->
-    <h1 appFitText>{{ eventName }}</h1>
+  <!-- TODO: Need to add style to children -->
+  <div *ngIf="eventName; else noTitleBlock">
+    <h1 appFitText>Time to {{ eventName }}</h1>
+  </div>
+  <ng-template #noTitleBlock><h1 appFitText>Set a title</h1></ng-template>
+  <div *ngIf="countdown; else noCountdownBlock">
     <h1 appFitText>{{ countdown }}</h1>
   </div>
+  <ng-template #noCountdownBlock>
+    <h1 appFitText>Set a date</h1>
+  </ng-template>
 
   <form (ngSubmit)="startCountdown()" #countdownForm="ngForm">
     <mat-form-field appearance="outline">
