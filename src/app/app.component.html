@@ -7,14 +7,16 @@
   <ng-template #noTitleBlock
     ><div><h1 appFitText class="text">Set an event</h1></div></ng-template
   >
-  <div *ngIf="countdown && eventName && endDate; else noCountdownBlock">
-    <p appFitText class="text">{{ countdown }}</p>
-  </div>
-  <ng-template #noCountdownBlock>
-    <div>
-      <p appFitText class="text">Set a date</p>
+  <div class="countdown-wrapper">
+    <div *ngIf="countdown && eventName && endDate; else noCountdownBlock">
+      <p appFitText class="text">{{ countdown }}</p>
     </div>
-  </ng-template>
+    <ng-template #noCountdownBlock>
+      <div>
+        <p appFitText class="text">Set a date</p>
+      </div>
+    </ng-template>
+  </div>
 
   <form #countdownForm="ngForm" id="form-container">
     <mat-form-field appearance="outline" class="form-field">

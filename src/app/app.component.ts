@@ -8,8 +8,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FitTextDirective } from './fit-text.directive';
 import { LocalStorageService } from './local-storage.service';
 import { formatCountdown } from '../shared/utils/countdown.util';
-
-const INTERVAL = 1000;
+import { DEFAULT_EVENT_NAME, INTERVAL } from '../shared/utils/constants';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +26,7 @@ const INTERVAL = 1000;
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  eventName = 'apply to Natural Cycles';
+  eventName = DEFAULT_EVENT_NAME;
   endDate: Date | null = null;
   countdown = '';
   // TODO: Refine this type - should be of type Timeout | number?
@@ -93,14 +92,15 @@ export class AppComponent implements OnInit {
       const end = new Date(this.endDate!).getTime();
       const delta = end - now;
 
-      // Base case: if the countdown is over
-      // if (delta <= 0) {
-      //   clearInterval(this.intervalId);
-      //   this.countdown = `0 days, 0 h, 0 m, 0 s`;
-      //   setLocalStorageKey('eventName', '');
-      //   setLocalStorageKey('endDate', '');
-      //   return;
-      // }
+      // Base case - when countdown hits 0 or goes negative
+      if (delta <= 0) {
+        clearInterval(this.intervalId);
+        this.countdown = formatCountdown(0);
+        // Clean up local storage to start with clean slate on page refresh
+        this.localStorageService.set('eventName', '');
+        this.localStorageService.set('endDate', '');
+        return;
+      }
 
       this.countdown = formatCountdown(delta);
     }, INTERVAL);
