@@ -8,6 +8,7 @@
     ><div><h1 appFitText class="text">Set an event</h1></div></ng-template
   >
   <div class="countdown-wrapper">
+    <!-- TODO: Fix date flickering -->
     <div *ngIf="countdown && eventName && endDate; else noCountdownBlock">
       <p appFitText class="text">{{ countdown }}</p>
     </div>
@@ -42,12 +43,10 @@
         [min]="minDate"
         autocomplete="off"
         (ngModelChange)="onEndDateChange()"
+        readonly
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-
-    <!-- BUG: ngSubmit isn't triggered unless focus is on eventName input -->
-    <!-- <button type="submit" style="display: none"></button> -->
   </form>
 </div>
