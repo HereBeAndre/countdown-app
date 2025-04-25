@@ -1,15 +1,18 @@
+@use "../styles/styles.scss" as *;
+// @use "styles" as *;
+
 #template-container {
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  background-color: #f5f3f3;
+  background-color: $color-background;
   padding: 0 2rem;
 }
 
 h1 {
-  color: #72045d;
+  color: $color-nc;
 }
 
 .text {
