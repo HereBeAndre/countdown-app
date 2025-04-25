@@ -53,7 +53,7 @@ export class FitTextDirective implements AfterViewInit, OnDestroy {
     const container = this.el.parentElement;
     if (!container) return;
 
-    const maxFontSize = 300;
+    const maxFontSize = 300; // Seems to strike a good balance without causing excessive layout shift
     const minFontSize = 10;
     const step = 1;
 
