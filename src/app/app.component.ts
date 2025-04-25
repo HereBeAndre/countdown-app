@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FitTextDirective } from './fit-text.directive';
 import { LocalStorageService } from './local-storage.service';
+import { formatCountdown } from '../shared/utils/countdown.util';
 
 const INTERVAL = 1000;
 
@@ -84,7 +85,8 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // Callable only from within the class since form doesn't have a proper submit
+  // Makes sense to call method only from within the class since form doesn't have a proper submit
+  // Also, could be refactored to use RxJS
   private startCountdown() {
     this.intervalId = setInterval(() => {
       const now = new Date().getTime();
@@ -100,14 +102,7 @@ export class AppComponent implements OnInit {
       //   return;
       // }
 
-      // TODO: Could be refactored to a Pipe?
-      const days = Math.floor(delta / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((delta / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((delta / (1000 * 60)) % 60);
-      const seconds = Math.floor((delta / 1000) % 60);
-
-      this.countdown = `${days} days, ${hours} h, ${minutes} m, ${seconds} s`;
-      console.log('Countdown:', this.countdown);
+      this.countdown = formatCountdown(delta);
     }, INTERVAL);
   }
 }
