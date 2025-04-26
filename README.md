@@ -1,30 +1,32 @@
-# CountdownApp
+# Countdown App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+A simple countdown timer application built with Angular 19.
+Users can set an event name and a future date, and the app will display a live countdown to the selected date.
 
-## Development server
+<p align="center">
+  <img src="./src/assets/screenshots/4K_monitor.png" alt="4K Monitor" width="600"/><br/>
+  <em>4K Monitor</em>
+</p>
 
-To start a local development server, run:
+<p align="center">
+  <img src="./src/assets/screenshots/laptop.png" alt="Laptop" width="600"/><br/>
+  <em>Laptop</em>
+</p>
 
-```bash
-ng serve
-```
+<p align="center">
+  <img src="./src/assets/screenshots/tablet.png" alt="Tablet" width="300" style="margin-right: 20px;"/>
+  <img src="./src/assets/screenshots/mobile.png" alt="Mobile" width="250"/>
+  <br/>
+  <em>Tablet &nbsp;&nbsp;&nbsp;&nbsp; Mobile</em>
+</p>
+</p>
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Getting Started
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
+1. Clone the repository and navigate to the project directory:
+2. Run `npm install` to install the required dependencies.
+3. Run `ng serve` to start the development server.
+4. Open your browser and navigate to `http://localhost:4200/` to view the application.
 
 ## Building
 
@@ -44,16 +46,23 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 ng test
 ```
 
-## Running end-to-end tests
+## Possible Improvements
 
-For end-to-end (e2e) testing, run:
+**UI**
 
-```bash
-ng e2e
-```
+1. Add UI element (e.g.button) to reset event and countdown
+2. Switch date picker to datetime picker. Improved UX, enabling user to select a specific time during the day
+3. Enable user input on date picker for improved accessibility - tabbing on calendar icon works, but text input is disabled
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+**Technical**
 
-## Additional Resources
+1. Modularise code for better readability and maintainability (e.g. create separate components for countdown and form)
+2. Format locale to YYYY-MM-DD (currently MM-DD-YYY)
+3. Extend test coverage
+4. `endDate` retrieval and parsing from local storage takes longer than `eventName`’s retrieval - rendering strategy could be improved
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Assumptions
+
+1. Date always refers to the start of the day. For example, let’s say I have a trip planned on 2024-06-21, then I would like the countdown to refer to the start of that day
+2. Because of point 1, current date, as well as past dates, are disabled in date picker
+3. When countdown hits 0, display `"00 days, 00 h, 00 m, 00 s"`. User should input a new date or refresh the page to start again
