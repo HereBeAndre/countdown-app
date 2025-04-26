@@ -34,8 +34,7 @@ export class AppComponent implements OnInit {
   endDate: Date | null = null;
   countdown = '';
   minDate = getTomorrowDate();
-  // TODO: Refine this type - should be of type Timeout | number?
-  private intervalId: any = null;
+  private intervalId: ReturnType<typeof setInterval> | number = 0;
 
   constructor(private localStorageService: LocalStorageService) {
     const savedEventName = this.localStorageService.get('eventName');
@@ -72,7 +71,6 @@ export class AppComponent implements OnInit {
 
     // If user clears the event name, clear the countdown
     if (this.eventName === '') {
-      console.log('Event name cleared');
       this.endDate = null;
       this.countdown = '';
       this.localStorageService.set('endDate', '');
