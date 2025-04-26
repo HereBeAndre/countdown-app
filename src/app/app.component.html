@@ -1,20 +1,21 @@
-<!-- TODO: Check text resizing -->
 <div id="template-container">
-  <!-- TODO: Need to add style to children -->
   <div *ngIf="eventName; else noTitleBlock">
     <h1 appFitText class="text">Time to {{ eventName }}</h1>
   </div>
   <ng-template #noTitleBlock
-    ><div><h1 appFitText class="text">Set an event</h1></div></ng-template
+    ><div>
+      <h1 appFitText class="text">Set the event's title</h1>
+    </div></ng-template
   >
+
   <div class="countdown-wrapper">
     <!-- TODO: Fix date flickering -->
-    <div *ngIf="countdown && eventName && endDate; else noCountdownBlock">
+    <ng-container *ngIf="endDate !== null; else noCountdownBlock">
       <p appFitText class="text">{{ countdown }}</p>
-    </div>
+    </ng-container>
     <ng-template #noCountdownBlock>
       <div>
-        <p appFitText class="text">Set a date</p>
+        <p appFitText class="text">Set the event's date</p>
       </div>
     </ng-template>
   </div>
@@ -31,7 +32,6 @@
         (ngModelChange)="onEventNameChange()"
       />
     </mat-form-field>
-
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Date</mat-label>
       <input

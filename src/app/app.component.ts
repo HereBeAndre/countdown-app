@@ -7,8 +7,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FitTextDirective } from './fit-text.directive';
 import { LocalStorageService } from './local-storage.service';
-import { formatCountdown } from '../shared/utils/countdown.util';
-import { DEFAULT_EVENT_NAME, INTERVAL } from '../shared/utils/constants';
+import {
+  getTomorrowDate,
+  INTERVAL,
+  formatCountdown,
+  isValidDate,
+} from '../shared/utils';
 
 @Component({
   selector: 'app-root',
@@ -26,36 +30,26 @@ import { DEFAULT_EVENT_NAME, INTERVAL } from '../shared/utils/constants';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  eventName = DEFAULT_EVENT_NAME;
+  eventName: string = '';
   endDate: Date | null = null;
   countdown = '';
+  minDate = getTomorrowDate();
   // TODO: Refine this type - should be of type Timeout | number?
-  intervalId: any = null;
-  // Needed to set the minDate for the datepicker
-  minDate = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    new Date().getDate() + 1
-  );
+  private intervalId: any = null;
 
   constructor(private localStorageService: LocalStorageService) {
-    // this.eventName = this.localStorageService.get('eventName');
-    this.endDate = (() => {
-      const rawDate = this.localStorageService.get('endDate');
-      const parsed = new Date(rawDate);
-      return isNaN(parsed.getTime()) ? null : parsed;
-    })();
-  }
+    const savedEventName = this.localStorageService.get('eventName');
+    if (savedEventName) {
+      this.eventName = savedEventName;
+    }
 
-  // constructor() {
-  //   const stringDate = getLocalStorageKey('endDate');
-  //   const parsed = new Date(stringDate);
-  //   this.endDate = isNaN(parsed.getTime()) ? null : parsed;
-  // }
+    const savedEndDate = this.localStorageService.get('endDate');
+    this.endDate = savedEndDate ? new Date(savedEndDate) : null;
+  }
 
   ngOnInit() {
     // Resume countdown if there's data in local storage
-    if (this.eventName && this.endDate) {
+    if (this.eventName && isValidDate(this.endDate)) {
       this.startCountdown();
     }
   }
@@ -74,12 +68,22 @@ export class AppComponent implements OnInit {
 
   onEventNameChange() {
     this.localStorageService.set('eventName', this.eventName);
-    if (this.eventName && this.endDate) this.startCountdown();
+    if (this.eventName && isValidDate(this.endDate)) this.startCountdown();
+
+    // If user clears the event name, clear the countdown
+    if (this.eventName === '') {
+      console.log('Event name cleared');
+      this.endDate = null;
+      this.countdown = '';
+      this.localStorageService.set('endDate', '');
+
+      clearInterval(this.intervalId);
+    }
   }
 
   onEndDateChange() {
-    if (this.endDate instanceof Date && !isNaN(this.endDate.getTime())) {
-      this.localStorageService.set('endDate', this.endDate.toString());
+    this.localStorageService.set('endDate', this.endDate!.toString() || '');
+    if (this.eventName && isValidDate(this.endDate)) {
       this.startCountdown();
     }
   }
@@ -89,7 +93,8 @@ export class AppComponent implements OnInit {
   private startCountdown() {
     this.intervalId = setInterval(() => {
       const now = new Date().getTime();
-      const end = new Date(this.endDate!).getTime();
+      // Type assertion is safe here - startCountdown is only called when endDate !== null
+      const end = new Date(this.endDate as Date).getTime();
       const delta = end - now;
 
       // Base case - when countdown hits 0 or goes negative
