@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  get = (key: 'eventName' | 'endDate') => localStorage.getItem(key) || '';
+  get = (key: 'eventName' | 'endDate') => localStorage.getItem(key) || ''
 
   set = (key: 'eventName' | 'endDate', value: string) =>
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, value)
 }
