@@ -3,23 +3,12 @@
 A simple countdown timer application built with Angular 19.
 Users can set an event name and a future date, and the app will display a live countdown to the selected date.
 
-<p align="center">
-  <img src="./src/assets/screenshots/4K_monitor.png" alt="4K Monitor" width="600"/><br/>
-  <em>4K Monitor</em>
-</p>
+## Features
 
-<p align="center">
-  <img src="./src/assets/screenshots/laptop.png" alt="Laptop" width="600"/><br/>
-  <em>Laptop</em>
-</p>
-
-<p align="center">
-  <img src="./src/assets/screenshots/tablet.png" alt="Tablet" width="300" style="margin-right: 20px;"/>
-  <img src="./src/assets/screenshots/mobile.png" alt="Mobile" width="250"/>
-  <br/>
-  <em>Tablet &nbsp;&nbsp;&nbsp;&nbsp; Mobile</em>
-</p>
-</p>
+- User-friendly interface for setting an event's name and date
+- Live countdown display
+- Responsive design for various screen sizes
+- Local storage support to persist data
 
 ## Getting Started
 
@@ -67,4 +56,25 @@ ng test
 2. Because of point 1, current date, as well as past dates, are disabled in date picker
 3. When countdown hits 0, display `"00 days, 00 h, 00 m, 00 s"`. User should input a new date or refresh the page to start again
 
-## Developer Notes
+## Screenshots
+
+<p align="center">
+  <img src="./src/assets/screenshots/4K_monitor.png" alt="4K Monitor" width="600"/><br/>
+  <em>4K Monitor</em>
+</p>
+
+<p align="center">
+  <img src="./src/assets/screenshots/laptop.png" alt="Laptop" width="600"/><br/>
+  <em>Laptop</em>
+</p>
+
+<div>
+  <p align="center">
+    <img src="./src/assets/screenshots/tablet.png" alt="Tablet" width="300" />
+    <span>Tablet</span>
+  </p>
+  <p align="center">
+    <img src="./src/assets/screenshots/mobile.png" alt="Mobile" width="250"/>
+    <span>Mobile</span>
+  </p>
+</div>
