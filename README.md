@@ -3,12 +3,11 @@
 A simple countdown timer application built with Angular 19.
 Users can set an event name and a future date, and the app will display a live countdown to the selected date.
 
-## Features
+## Hosting and Deployment
 
-- User-friendly interface for setting an event's name and date
-- Live countdown display
-- Responsive design for various screen sizes
-- Local storage support to persist data
+The application is hosted on Netlify at [this link](https://wonderful-dolphin-952645.netlify.app/).
+
+CD pipeline on Netlify is set up to automatically deploy the latest changes from the `main` branch of the GitHub repository.
 
 ## Getting Started
 
