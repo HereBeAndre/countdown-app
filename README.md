@@ -1,13 +1,19 @@
 # Countdown App
 
-A simple countdown timer application built with Angular 19.
+A countdown timer application built with Angular 19.
 Users can set an event name and a future date, and the app will display a live countdown to the selected date.
 
-## Hosting and Deployment
+## Table of Contents
 
-The application is hosted on Netlify at [this link](https://wonderful-dolphin-952645.netlify.app/).
-
-CD pipeline on Netlify is set up to automatically deploy the latest changes from the `main` branch of the GitHub repository.
+- [Countdown App](#countdown-app)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Hosting and Deployment](#hosting-and-deployment)
+  - [Building](#building)
+  - [Running unit tests](#running-unit-tests)
+  - [Possible Improvements](#possible-improvements)
+  - [Assumptions](#assumptions)
+  - [Screenshots](#screenshots)
 
 ## Getting Started
 
@@ -15,6 +21,13 @@ CD pipeline on Netlify is set up to automatically deploy the latest changes from
 2. Run `npm install` to install the required dependencies.
 3. Run `ng serve` to start the development server.
 4. Open your browser and navigate to `http://localhost:4200/` to view the application.
+5.
+
+## Hosting and Deployment
+
+The application is hosted on Netlify at [this link](https://wonderful-dolphin-952645.netlify.app/).
+
+CD pipeline on Netlify is set up to automatically deploy the latest changes from the `main` branch of the GitHub repository.
 
 ## Building
 
