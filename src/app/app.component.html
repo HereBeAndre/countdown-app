@@ -9,7 +9,7 @@
   >
 
   <div class="countdown-wrapper">
-    <ng-container *ngIf="endDate !== null; else noCountdownBlock">
+    <ng-container *ngIf="endDate; else noCountdownBlock">
       <p appFitText class="text">{{ countdown }}</p>
     </ng-container>
     <ng-template #noCountdownBlock>
@@ -28,7 +28,7 @@
         [(ngModel)]="eventName"
         required
         autocomplete="off"
-        (ngModelChange)="onEventNameChange()"
+        (ngModelChange)="onEventNameChange($event)"
       />
     </mat-form-field>
     <mat-form-field appearance="outline" class="form-field">

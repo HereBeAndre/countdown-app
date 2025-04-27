@@ -66,3 +66,5 @@ ng test
 1. Date always refers to the start of the day. For example, let’s say I have a trip planned on 2024-06-21, then I would like the countdown to refer to the start of that day
 2. Because of point 1, current date, as well as past dates, are disabled in date picker
 3. When countdown hits 0, display `"00 days, 00 h, 00 m, 00 s"`. User should input a new date or refresh the page to start again
+
+## Developer Notes

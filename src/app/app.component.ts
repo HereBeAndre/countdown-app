@@ -53,41 +53,35 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // TODO: is onDestroy needed to clear the interval?
   // ngOnDestroy() {
   //   if (this.intervalId) {
   //     clearInterval(this.intervalId);
   //   }
-  //   if (this.delta && this.delta <= 0) {
-  //     this.delta = null;
-  //     setLocalStorageKey('eventName', '');
-  //     setLocalStorageKey('endDate', '');
-  //   }
   // }
 
-  onEventNameChange() {
-    this.localStorageService.set('eventName', this.eventName);
-    if (this.eventName && isValidDate(this.endDate)) this.startCountdown();
-
-    // If user clears the event name, clear the countdown
-    if (this.eventName === '') {
-      this.endDate = null;
-      this.countdown = '';
-      this.localStorageService.set('endDate', '');
-
-      clearInterval(this.intervalId);
+  onEventNameChange(eventName: string) {
+    if (eventName.trim() !== '') {
+      this.eventName = eventName;
+      this.localStorageService.set('eventName', this.eventName);
+      if (this.eventName && isValidDate(this.endDate)) this.startCountdown();
+    } else {
+      this.localStorageService.set('eventName', '');
+      this.eventName = '';
     }
   }
 
   onEndDateChange() {
-    this.localStorageService.set('endDate', this.endDate!.toString() || '');
+    this.localStorageService.set(
+      'endDate',
+      (this.endDate as Date).toString() || ''
+    );
     if (this.eventName && isValidDate(this.endDate)) {
       this.startCountdown();
     }
   }
 
   // Makes sense to call method only from within the class since form doesn't have a proper submit
-  // Also, could be refactored to use RxJS
+  // Also, could be refactored to use RxJS?
   private startCountdown() {
     this.intervalId = setInterval(() => {
       const now = new Date().getTime();
