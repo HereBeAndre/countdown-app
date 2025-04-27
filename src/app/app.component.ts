@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,7 +29,7 @@ import {
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   eventName: string = '';
   endDate: Date | null = null;
   countdown = '';
@@ -53,11 +53,11 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // ngOnDestroy() {
-  //   if (this.intervalId) {
-  //     clearInterval(this.intervalId);
-  //   }
-  // }
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
 
   onEventNameChange(eventName: string) {
     if (eventName.trim() !== '') {
